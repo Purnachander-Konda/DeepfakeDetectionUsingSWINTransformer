@@ -1,0 +1,45 @@
+# Credentials & secrets
+Creds
+Creds/
+.env
+
+# Dataset & extracted frames
+dataset
+dataset/
+data/
+temp/
+
+# Model weights (too large for GitHub — host on Hugging Face Hub)
+*.bin
+*.safetensors
+*.pt
+*.pth
+
+# Training outputs
+results/
+cache/
+final-test-results/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+Thumbs.db
+.DS_Store

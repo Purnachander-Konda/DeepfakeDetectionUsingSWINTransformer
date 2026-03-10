@@ -1,0 +1,62 @@
+{
+  "_name_or_path": "./models/swin-tiny-complete",
+  "architectures": [
+    "SwinForImageClassification"
+  ],
+  "attention_probs_dropout_prob": 0.0,
+  "depths": [
+    2,
+    2,
+    6,
+    2
+  ],
+  "drop_path_rate": 0.1,
+  "embed_dim": 96,
+  "encoder_stride": 32,
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.0,
+  "hidden_size": 768,
+  "id2label": {
+    "0": "Deepfakes",
+    "1": "Face2Face",
+    "2": "FaceSwap",
+    "3": "NeuralTextures",
+    "4": "real"
+  },
+  "image_size": 224,
+  "initializer_range": 0.02,
+  "label2id": {
+    "Deepfakes": "0",
+    "Face2Face": "1",
+    "FaceSwap": "2",
+    "NeuralTextures": "3",
+    "real": "4"
+  },
+  "layer_norm_eps": 1e-05,
+  "mlp_ratio": 4.0,
+  "model_type": "swin",
+  "num_channels": 3,
+  "num_heads": [
+    3,
+    6,
+    12,
+    24
+  ],
+  "num_layers": 4,
+  "out_features": null,
+  "patch_size": 4,
+  "path_norm": true,
+  "problem_type": "single_label_classification",
+  "qkv_bias": true,
+  "stage_names": [
+    "stem",
+    "stage1",
+    "stage2",
+    "stage3",
+    "stage4"
+  ],
+  "torch_dtype": "float32",
+  "transformers_version": "4.26.0",
+  "use_absolute_embeddings": false,
+  "window_size": 7
+}
