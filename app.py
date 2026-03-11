@@ -9,8 +9,8 @@ from PIL import Image
 import torch
 
 # ── Configuration ──────────────────────────────────────────────────────────────
-# Replace YOUR_USERNAME with your Hugging Face username after uploading the model
-MODEL_ID = "YOUR_USERNAME/deepfake-detection-swin"  # TODO: Update this
+# Replace Purnachander-Konda with your Hugging Face username after uploading the model
+MODEL_ID = "Purnachander-Konda/deepfake-detection-swin"  # TODO: Update this
 LOCAL_MODEL_PATH = "./models/swin-tiny-complete"
 
 # ── Load Model ─────────────────────────────────────────────────────────────────

@@ -12,7 +12,7 @@ A deep learning system for detecting deepfake images using a fine-tuned **SWIN T
 > **B.Tech Major Project** — Built with PyTorch, HuggingFace Transformers, and Gradio.
 
 <!-- TODO: Uncomment after deploying to Hugging Face Spaces -->
-<!-- 🚀 **[Try the Live Demo →](https://huggingface.co/spaces/YOUR_USERNAME/deepfake-detection-swin)** -->
+<!-- 🚀 **[Try the Live Demo →](https://huggingface.co/spaces/Purnachander-Konda/deepfake-detection-swin)** -->
 
 ---
 
@@ -110,7 +110,7 @@ DeepfakeDetectionUsingSWINTransformer/
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/DeepfakeDetectionUsingSWINTransformer.git
+git clone https://github.com/Purnachander-Konda/DeepfakeDetectionUsingSWINTransformer.git
 cd DeepfakeDetectionUsingSWINTransformer
 
 # Create virtual environment
@@ -132,7 +132,7 @@ python app.py
 
 # Option 2: Manual download using huggingface-cli
 pip install huggingface-hub
-huggingface-cli download YOUR_USERNAME/deepfake-detection-swin --local-dir ./models/swin-tiny-complete
+huggingface-cli download Purnachander-Konda/deepfake-detection-swin --local-dir ./models/swin-tiny-complete
 ```
 
 ---
@@ -214,7 +214,7 @@ python swin-tiny-complete-training.py
 
 The model is deployed on **Hugging Face Spaces** with a Gradio interface:
 
-🔗 **[Try it here → huggingface.co/spaces/YOUR_USERNAME/deepfake-detection-swin](https://huggingface.co/spaces/YOUR_USERNAME/deepfake-detection-swin)**
+🔗 **[Try it here → huggingface.co/spaces/Purnachander-Konda/deepfake-detection-swin](https://huggingface.co/spaces/Purnachander-Konda/deepfake-detection-swin)**
 
 ---
 
