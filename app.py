@@ -86,9 +86,8 @@ demo = gr.Interface(
     title=TITLE,
     description=DESCRIPTION,
     article="**Model:** SWIN-Tiny (patch4-window7-224) fine-tuned for deepfake detection | **Framework:** PyTorch + HuggingFace Transformers",
-    allow_flagging="never",
-    theme=gr.themes.Soft(),
+    flagging_mode="never",
 )
 
 if __name__ == "__main__":
-    demo.launch()
+    demo.launch(theme=gr.themes.Soft())
