@@ -7,7 +7,7 @@
 ![Gradio](https://img.shields.io/badge/Gradio-UI-F97316?logo=gradio&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-A deep learning system for detecting deepfake images using a fine-tuned **SWIN Transformer** (Shifted Window Transformer). The model classifies facial images as **Real** or identifies the specific **deepfake technique** used to generate them.
+A deep learning system for detecting deepfake images using a fine-tuned **SWIN Transformer** (Shifted Window Transformer). The model classifies facial images as **Real** or **Fake** with confidence scores.
 
 > **B.Tech Major Project** — Built with PyTorch, HuggingFace Transformers, and Gradio.
 
@@ -37,7 +37,7 @@ A deep learning system for detecting deepfake images using a fine-tuned **SWIN T
 
 Deepfakes pose a growing threat to digital media integrity. This project leverages the **SWIN Transformer** architecture — a hierarchical vision transformer that computes self-attention within shifted windows — to accurately detect and classify manipulated facial images.
 
-The model is fine-tuned on the [FaceForensics++](https://github.com/ondyari/FaceForensics) dataset, which contains both real and manipulated face images generated using four different deepfake techniques.
+The model is fine-tuned on the [Deepfake and Real Images](https://huggingface.co/datasets/Hemg/deepfake-and-real-images) dataset for binary classification (Real vs Fake).
 
 ---
 
@@ -53,7 +53,6 @@ The model is fine-tuned on the [FaceForensics++](https://github.com/ondyari/Face
                                                               ┌──────────────────┐
                                                               │  Real / Fake     │
                                                               │  + Confidence %  │
-                                                              │  + Fake Type     │
                                                               └──────────────────┘
 ```
 
@@ -69,10 +68,7 @@ The model is fine-tuned on the [FaceForensics++](https://github.com/ondyari/Face
 | Category | Description |
 |---|---|
 | **Real** | Authentic, unmanipulated face image |
-| **Deepfakes** | Face generated using autoencoder-based deepfake techniques |
-| **Face2Face** | Facial reenactment — expressions transferred from source to target |
-| **FaceSwap** | Identity swap — face region replaced with another person's face |
-| **NeuralTextures** | Facial manipulation using learned neural textures |
+| **Fake** | Image generated or manipulated using deepfake techniques |
 
 ---
 
@@ -82,14 +78,14 @@ The model is fine-tuned on the [FaceForensics++](https://github.com/ondyari/Face
 DeepfakeDetectionUsingSWINTransformer/
 ├── app.py                          # Gradio web app (for deployment)
 ├── demo.py                         # Local demo using HuggingFace pipeline
-├── swin-tiny-complete-training.py   # Model training script
+├── train_on_colab.ipynb            # Google Colab training notebook
+├── swin-tiny-complete-training.py   # Local training script
 ├── model-testing.py                 # Model evaluation script
-├── image_extractor.py               # Frame extraction from FaceForensics++ videos
+├── image_extractor.py               # Frame extraction utility
 ├── models/
-│   └── swin-tiny-complete/          # Fine-tuned model files
+│   └── swin-tiny-complete/          # Fine-tuned model config
 │       ├── config.json
-│       ├── preprocessor_config.json
-│       └── pytorch_model.bin        # Model weights (not in repo — see Setup)
+│       └── preprocessor_config.json
 ├── requirements.txt                 # Python dependencies
 ├── .gitignore
 ├── LICENSE
@@ -163,21 +159,22 @@ python model-testing.py
 
 ## 🏋️ Model Training
 
-### Dataset Preparation
+### Train on Google Colab (Recommended)
 
-1. Download the [FaceForensics++](https://github.com/ondyari/FaceForensics) dataset.
-2. Place videos in the `dataset/` directory following this structure:
-   ```
-   dataset/
-   ├── original_sequences/youtube/c23/videos/
-   └── manipulated_sequences/c23/videos{Deepfakes,Face2Face,FaceSwap,NeuralTextures}/
-   ```
-3. Extract frames and split into train/test:
-   ```bash
-   python image_extractor.py
-   ```
+The easiest way to train the model — uses free GPU:
 
-### Train the Model
+1. Open [`train_on_colab.ipynb`](train_on_colab.ipynb) in Google Colab
+2. Set Runtime → **GPU (T4)**
+3. Run all cells — the notebook will:
+   - Download the [Deepfake and Real Images](https://huggingface.co/datasets/Hemg/deepfake-and-real-images) dataset
+   - Fine-tune SWIN-Tiny for 3 epochs (~30-60 min)
+   - Upload the trained model to Hugging Face Hub automatically
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Purnachander-Konda/DeepfakeDetectionUsingSWINTransformer/blob/main/train_on_colab.ipynb)
+
+### Train Locally (Advanced)
+
+Requires an NVIDIA GPU and the FaceForensics++ dataset:
 
 ```bash
 python swin-tiny-complete-training.py
@@ -186,10 +183,10 @@ python swin-tiny-complete-training.py
 **Training Configuration:**
 - **Base Model**: `microsoft/swin-tiny-patch4-window7-224` (pretrained on ImageNet-1K)
 - **Learning Rate**: 2e-5
-- **Batch Size**: 4 (with gradient accumulation of 4)
-- **Epochs**: Configurable (default: 1 in script, increase for better results)
+- **Batch Size**: 16 (with gradient accumulation of 2)
+- **Epochs**: 3
 - **Optimizer**: AdamW with weight decay 0.01
-- **Strategy**: Gradient checkpointing enabled for memory efficiency
+- **Strategy**: Gradient checkpointing + FP16 mixed precision
 
 ---
 
@@ -223,7 +220,7 @@ The model is deployed on **Hugging Face Spaces** with a Gradio interface:
 - **Model**: [SWIN Transformer](https://arxiv.org/abs/2103.14030) (Tiny variant)
 - **Framework**: [PyTorch](https://pytorch.org/) + [HuggingFace Transformers](https://huggingface.co/docs/transformers)
 - **Web UI**: [Gradio](https://gradio.app/)
-- **Dataset**: [FaceForensics++](https://github.com/ondyari/FaceForensics)
+- **Dataset**: [Deepfake and Real Images](https://huggingface.co/datasets/Hemg/deepfake-and-real-images)
 - **Metrics**: HuggingFace Evaluate (Accuracy, F1, Precision, Recall)
 - **Hosting**: [Hugging Face Spaces](https://huggingface.co/spaces)
 
@@ -238,6 +235,7 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 ## 🙏 Acknowledgments
 
 - [Microsoft Research — SWIN Transformer](https://github.com/microsoft/Swin-Transformer)
-- [FaceForensics++ Benchmark](https://github.com/ondyari/FaceForensics)
+- [Hemg/deepfake-and-real-images](https://huggingface.co/datasets/Hemg/deepfake-and-real-images) dataset
 - [HuggingFace](https://huggingface.co/) for model hosting and Transformers library
 - [Gradio](https://gradio.app/) for the web interface framework
+- [Google Colab](https://colab.research.google.com/) for free GPU training

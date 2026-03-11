@@ -27,11 +27,8 @@ model.eval()
 
 # Label descriptions for user-friendly output
 LABEL_INFO = {
-    "real": ("✅ Real", "This image appears to be authentic."),
-    "Deepfakes": ("❌ Deepfake", "This image was likely generated using Deepfakes."),
-    "Face2Face": ("❌ Face2Face", "This image was likely manipulated using Face2Face reenactment."),
-    "FaceSwap": ("❌ FaceSwap", "This image was likely created using FaceSwap technology."),
-    "NeuralTextures": ("❌ NeuralTextures", "This image was likely manipulated using Neural Textures."),
+    "Real": ("✅ Real", "This image appears to be authentic and unmanipulated."),
+    "Fake": ("❌ Fake", "This image was likely generated or manipulated using deepfake techniques."),
 }
 
 
@@ -74,17 +71,16 @@ TITLE = "🔍 Deepfake Detection using SWIN Transformer"
 DESCRIPTION = """
 Upload a face image to detect whether it is **real** or a **deepfake**.
 
-This model uses a fine-tuned **SWIN Transformer** (Shifted Window Transformer) to classify facial images into one of five categories:
-**Real**, **Deepfakes**, **Face2Face**, **FaceSwap**, or **NeuralTextures**.
+This model uses a fine-tuned **SWIN Transformer** (Shifted Window Transformer) to classify facial images as **Real** or **Fake**.
 
-Built as a B.Tech Major Project — trained on the [FaceForensics++](https://github.com/ondyari/FaceForensics) dataset.
+Built as a B.Tech Major Project — trained on the [Deepfake and Real Images](https://huggingface.co/datasets/Hemg/deepfake-and-real-images) dataset.
 """
 
 demo = gr.Interface(
     fn=classify_image,
     inputs=gr.Image(type="pil", label="Upload Face Image"),
     outputs=[
-        gr.Label(num_top_classes=5, label="Classification Scores"),
+        gr.Label(num_top_classes=2, label="Classification Scores"),
         gr.Markdown(label="Verdict"),
     ],
     title=TITLE,
